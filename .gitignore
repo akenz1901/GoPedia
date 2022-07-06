@@ -1,0 +1,5 @@
+db.sqlite3
+gopedia_pdf/settings.py
+.idea
+*.pyc
+__pycache__/
