@@ -1,8 +1,9 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import StudentsSerializer
+from .serializers import StudentsSerializer, UserAgentSerializer
 from gopedia_management.models import StudentSummarySubscriber
+from django.contrib.auth import get_user_model
 
 
 @api_view(['GET', 'POST'])
@@ -25,7 +26,7 @@ def update_student_purchase(request, email):
     try:
         student = StudentSummarySubscriber.objects.get(email__exact=email)
     except StudentSummarySubscriber.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({"message": "No student found"}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         serializer = StudentsSerializer(student)
@@ -48,3 +49,21 @@ def update_student_purchase(request, email):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getAgent(request, email):
+    try:
+        agents = get_user_model().objects.get(email__exact=email)
+    except get_user_model().DoesNotExist:
+        return Response({"message": "No user found"}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = UserAgentSerializer(agents)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getAllAgents(request):
+    agents = get_user_model().objects.all()
+    serializer = UserAgentSerializer(agents, many=True)
+    return Response(serializer.data)

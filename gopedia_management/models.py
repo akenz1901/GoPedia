@@ -2,12 +2,26 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+import os
 
 
 class PdfAdmin(AbstractUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, blank=False, null=False)
+    business_name = models.CharField(max_length=250, blank=True, null=True, unique=True)
     pdf_file = models.FileField(verbose_name="summary", upload_to="static/", null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now())
+    logo = models.ImageField(upload_to="media/", blank=True, null=True)
+
+    def __str__(self):
+        return self.business_name
+
+    def get_list_of_available_courses(self):
+        path = f'{os.getcwd()}\\gopedia_management\\static\\{self.business_name}'
+        try:
+            list_of_available_courses = os.listdir(path)
+            return list_of_available_courses
+        except FileNotFoundError:
+            return f'Invalid Path, {self.business_name} does not exist'
 
 
 class StudentSummarySubscriber(models.Model):
