@@ -16,7 +16,10 @@ class PdfAdmin(AbstractUser):
         return self.business_name
 
     def get_list_of_available_courses(self):
-        path = f'{os.getcwd()}\\gopedia_management\\static\\{self.business_name}'
+        if len(os.getcwd()) > 7:
+            path = f'{os.getcwd()}\\gopedia_management\\static\\{self.business_name}'
+        else:
+            path = f'{os.getcwd()}/gopedia_management/static/{self.business_name}'
         try:
             list_of_available_courses = os.listdir(path)
             return list_of_available_courses
