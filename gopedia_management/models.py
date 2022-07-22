@@ -10,7 +10,7 @@ class PdfAdmin(AbstractUser):
     business_name = models.CharField(max_length=250, blank=True, null=True, unique=True)
     pdf_file = models.FileField(verbose_name="summary", upload_to="static/", null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now())
-    logo = models.ImageField(upload_to="media/", blank=True, null=True)
+    logo = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.business_name
