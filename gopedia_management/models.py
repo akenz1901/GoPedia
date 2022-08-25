@@ -22,7 +22,11 @@ class PdfAdmin(AbstractUser):
             path = f'{os.getcwd()}/gopedia_management/static/{self.business_name}'
         try:
             list_of_available_courses = os.listdir(path)
-            return list_of_available_courses
+            new_list = []
+            for i in list_of_available_courses:
+                file_url = f'https://gopediacdn.herokuapp.com/static/{self.business_name}/'
+                new_list.append(file_url + i)
+            return new_list
         except FileNotFoundError:
             return f'Invalid Path, {self.business_name} does not exist'
 
