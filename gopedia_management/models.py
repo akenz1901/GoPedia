@@ -28,7 +28,7 @@ class PdfAdmin(AbstractUser):
                 new_list.append(file_url + i)
             return new_list
         except FileNotFoundError:
-            return f'Invalid Path, {self.business_name} does not exist'
+            return []
 
 
 class StudentSummarySubscriber(models.Model):
