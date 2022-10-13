@@ -4,3 +4,5 @@ db.sqlite3
 __pycache__/
 .env
 /staticfiles
+/gopedia_management/static/calculus
+/gopedia_management/static/winsmart
