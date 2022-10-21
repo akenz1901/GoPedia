@@ -13,7 +13,7 @@ class PdfAdmin(AbstractUser):
     logo = models.URLField(blank=True, null=True)
 
     def __str__(self):
-        return self.business_name
+        return self.business_name or ''
 
     def get_list_of_available_courses(self):
         if len(os.getcwd()) > 7:
