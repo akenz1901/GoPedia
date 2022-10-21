@@ -64,6 +64,6 @@ def getAgent(request, email):
 
 @api_view(['GET'])
 def getAllAgents(request):
-    agents = get_user_model().objects.all()
+    agents = get_user_model().objects.filter(business_name__isnull=False).all()
     serializer = UserAgentSerializer(agents, many=True)
     return Response(serializer.data)
